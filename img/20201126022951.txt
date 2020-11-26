@@ -1,0 +1,110 @@
+SELECT 
+	`students`.`name` AS '姓名',
+	`students`.`birthday` AS '生日',
+    `students`.`addr` AS '地址',
+    `classes`.`name`  AS '班級',
+	`class_student`.`seat_num` AS '班級座號'    
+FROM 
+	`class_student`,
+	`students`,
+    `classes`
+WHERE 
+    `students`.`school_num`=`class_student`.`school_num` &&
+     `class_student`.`class_code`=`classes`.`code` &&
+     `class_student`.`class_code`='103' &&
+     LEFT(`students`.`addr`,3)='台中縣'
+ORDER BY `students`.`birthday` DESC
+---------------------------------------------------
+SELECT * 
+FROM 
+	`person` 
+WHERE 
+	`person`.`pro_2`='數位電路'
+----------------------------------------------------
+SELECT 
+	`employee`.`name`,
+    `employee`.`position`,
+    `person`.`age`,
+    `person`.`pro_1`,
+    `person`.`pro_2`
+FROM 
+	`person`,
+    `employee`
+WHERE 
+	`person`.`name`=`employee`.`id` &&
+	`person`.`pro_2`='數位電路'
+-------------------------------------------------------
+SELECT 
+	`employee`.`name`,
+    `employee`.`position`,
+    `employee`.`salary`,
+    `person`.`lang_1`,
+    `person`.`lang_2`,
+    `employee`.`city`
+FROM 
+	`employee`,
+	`person` 
+WHERE 
+	(`lang_1`='日語' OR
+	`lang_2`='日語') &&
+    `person`.`name`=`employee`.`id` &&
+    `employee`.`city` LIKE '%台北市%'
+-----------------------------------------------------
+SELECT 
+	LEFT(`addr`,3) AS '縣市',
+    IF(SUBSTRING(`uni_id`,2,1)=1,'男','女') AS '性別',
+    COUNT(*)
+FROM 
+	`students` 
+GROUP BY
+	LEFT(`addr`,3),
+    SUBSTRING(`uni_id`,2,1)
+-------------------------------------------------
+SELECT 
+	LEFT(`addr`,3) AS '縣市',
+    CASE
+    	WHEN SUBSTRING(`uni_id`,2,1)=1 THEN '男'
+        WHEN SUBSTRING(`uni_id`,2,1)=2 THEN '女'
+        END AS '性別',
+    COUNT(*)
+FROM 
+	`students` 
+GROUP BY
+	LEFT(`addr`,3),
+    SUBSTRING(`uni_id`,2,1)
+------------------------------------------
+SELECT * 
+FROM 
+	`students` 
+LIMIT 
+	10,20
+--------------------------------------------
+SELECT * 
+
+FROM 
+	`students` 
+WHERE 
+	id IN(2,13,66)
+-----------------------------
+SELECT * 
+
+FROM 
+	`students` 
+WHERE 
+	id BETWEEN 2 AND 40
+---------------------------------
+SELECT * 
+FROM 
+	`students` 
+WHERE 
+	`birthday` 
+BETWEEN '1984-01-01' AND '1984-03-31'
+ORDER BY `birthday`
+-------------------------------
+SELECT * 
+FROM 
+	`students` 
+WHERE 
+	`birthday` >= '1984-01-01' AND 
+    `birthday`<= '1984-03-31'
+ORDER BY `birthday`
