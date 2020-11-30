@@ -9,12 +9,22 @@
  * 7.結束檔案
  */
     include_once "base.php";
+
+    
+
     if(!empty($_GET['do']) && $_GET['do']=='download'){
         $rows=all("students");
+        $file=fopen('download.csv',"w+");
+        $utf8_with_bom = chr(239).chr(187).chr(191);
+        fwrite($file,$utf8_with_bom);
         foreach($rows as $row){
             $line=implode(',',[$row['id'],$row['name'],$row['age'],$row['birthday'],$row['addr']]);
-            echo $line . "<br>";
+            fwrite($file,$line);
+            echo $line . "已寫入<br>";
         }
+        fclose($file);
+
+        $filename="download.csv";
     }
 ?>
 <!DOCTYPE html>
@@ -55,6 +65,12 @@
 
 $rows=all('students');
 
+if(isset($filename)){    
+
+?>
+<a href="download.csv" download>可以下載了</a>
+<?php
+}
 ?>
 <table>
     <tr>

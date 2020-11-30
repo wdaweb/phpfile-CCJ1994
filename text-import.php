@@ -19,6 +19,7 @@
         while(!feof($file)){
             $line=fgets($file);
             if($num!=0){
+
                 $line=explode(",",$line);
                 $data=[
                     'name'=>$line['1'],
